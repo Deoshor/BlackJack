@@ -1,5 +1,5 @@
 class Deck
-  attr_accessor :deck, :card
+  attr_reader :deck, :card, :score
 
   def initialize
     @deck ={
@@ -17,12 +17,17 @@ class Deck
       "K+" => 10, "K<>" => 10, "K<3" => 10, "K^" => 10,
       "A+" => 1, "A<>" => 1, "A<3" => 1, "A^" => 1
     }
+    @score = []
   end
 
   def give_card
-    @card = @deck.keys.sample
-    @deck.delete(@card)
-    @card = "#{@card}"
+    card = @deck.keys.sample
+    score
+    @deck.delete(card)
+    @card = card
   end
-  
+
+  def score
+    @score << @deck["#{card}"]
+  end
 end

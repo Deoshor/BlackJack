@@ -1,13 +1,13 @@
 require_relative './test.rb'
 class Game
   include Test
-  attr_accessor :cards_p, :cards_d, :deposit_p, :deposit_d
+  attr_accessor :cards_p, :cards_d, :deposit_p, :deposit_d, :score
   attr_reader :name, :deck, :card
 
   def initialize
     @cards_p = []
     @cards_d = []
-    @deposit_p = []
+    @score = []
   end
 
   def main_menu
@@ -44,19 +44,22 @@ class Game
   def start_game
     start_game_player
     puts "Ваши карты: #{@cards_p}"
+    puts "Ваш депозит: #{@deposit_p}"
+    puts "#{@score}"
+    puts
     start_game_dealer
     puts "Карты дилера: [****, ****]"
+    puts "Депозит дилера: #{@deposit_p}"
   end
 
   def start_game_player
     @cards_p = "#{@cards_p}"
-    puts "#{deposit_p}".to_i
-    puts @deposit_p =- 20
+    @deposit_p = @deposit_p - 10
   end
 
   def start_game_dealer
     @cards_d = "#{@cards_d}"
-    puts @deposit_d =- 10
+    @deposit_d = @deposit_d - 10
   end
 
 end
