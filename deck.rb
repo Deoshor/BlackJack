@@ -1,33 +1,20 @@
+#playing deck
 class Deck
-  attr_reader :deck, :card, :score
+  attr_reader :cards
 
   def initialize
-    @deck ={
-      "2+" => 2, "2<>" => 2, "2<3" => 2, "2^" => 2,
-      "3+" => 3, "3<>" => 3, "3<3" => 3, "3^" => 3,
-      "4+" => 4, "4<>" => 4, "4<3" => 4, "4^" => 4,
-      "5+" => 5, "5<>" => 5, "5<3" => 5, "5^" => 5,
-      "6+" => 6, "6<>" => 6, "6<3" => 6, "6^" => 6,
-      "7+" => 7, "7<>" => 7, "7<3" => 7, "7^" => 7,
-      "8+" => 8, "8<>" => 8, "8<3" => 8, "8^" => 8,
-      "9+" => 9, "9<>" => 9, "9<3" => 9, "9^" => 9,
-      "10+" => 10, "10<>" => 10, "10<3" => 10, "10^" => 10,
-      "V+" => 10, "V<>" => 10, "V<3" => 10, "V^" => 10,
-      "Q+" => 10, "Q<>" => 10, "Q<3" => 10, "Q^" => 10,
-      "K+" => 10, "K<>" => 10, "K<3" => 10, "K^" => 10,
-      "A+" => 1, "A<>" => 1, "A<3" => 1, "A^" => 1
-    }
-    @score = []
+    @cards = []
+    collect
+    shuffle
   end
 
-  def give_card
-    card = @deck.keys.sample
-    score
-    @deck.delete(card)
-    @card = card
+  def collect
+    Card::CARDS.each do |shirt, value|
+      @cards << Card.new(shirt,value)
+    end
   end
 
-  def score
-    @score << @deck["#{card}"]
+  def shuffle
+    @cards.shuffle!
   end
 end

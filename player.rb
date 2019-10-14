@@ -1,21 +1,10 @@
-class Player
-  attr_accessor :name, :deposit_p
+#class for player
+class Player < Person
+  attr_reader :name
 
-  def initialize(name, deposit_p=100)
+  def initialize(name)
+    super
     @name = name
-    @deposit_p = deposit_p
-  end
-
-  def miss
-
-  end
-
-  def add_card
-
-  end
-
-  def open_card
-
   end
 
 end
