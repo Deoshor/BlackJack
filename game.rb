@@ -1,65 +1,63 @@
-require_relative './test.rb'
+#class of game
 class Game
-  include Test
-  attr_accessor :cards_p, :cards_d, :deposit_p, :deposit_d, :score
-  attr_reader :name, :deck, :card
+  attr_reader :player, :dealer, :bank, :deck, :rate
+  RATE = 10
 
-  def initialize
-    @cards_p = []
-    @cards_d = []
-    @score = []
+  def initialize(player, dealer, deck)
+    @player = player
+    @dealer = dealer
+    @deck = deck
+    @rate = RATE
+    @bank = 0
   end
 
-  def main_menu
-    puts 'Добро пожаловать в игру "Black Jack"'
-    if @name.nil?
-      puts 'Введите свое имя'
-      @name = gets.chomp
-      puts "Здравствуйте, #{@name}"
-    else
-      puts "Здравствуйте, #{@name}"
-    end
-    puts 'Выберите пункт меню:'
-    puts '1. Начать игру'
-    puts '0. Выход из игры'
-    input = gets.chomp.to_i
-    until input.nil?
-      system('clear')
-      if input == 1
-        game
-      elsif input == 0
-        exit
-      else
-        main_menu
-      end
-    end
-    puts 'Пока.'
-    exit
-  end
-
-  def game
+  def new_game(player_name)
+    @player = Player.new(player_name)
+    @dealer = Dealer.new
     start_game
   end
 
   def start_game
-    start_game_player
-    puts "Ваши карты: #{@cards_p}"
-    puts "Ваш депозит: #{@deposit_p}"
-    puts "#{@score}"
-    puts
-    start_game_dealer
-    puts "Карты дилера: [****, ****]"
-    puts "Депозит дилера: #{@deposit_p}"
+    @player.hand = []
+    @dealer.hand = []
+    @player.score = 0
+    @dealer.score = 0
+    @deck = Deck.new
+    2.times { @player.take_card(@deck) }
+    2.times { @dealer.take_card(@deck) }
   end
 
-  def start_game_player
-    @cards_p = "#{@cards_p}"
-    @deposit_p = @deposit_p - 10
+  def check_result
+    if @player.points > @dealer.points && @player.points <= 21
+      player_wins
+    elsif @player.points > 21 && @dealer.points > 21 || @player.points == @dealer.points
+      draw
+    elsif @player.points > 21 && @dealer.points <= 21
+      dealer_wins
+    elsif @player.points < @dealer.points && @dealer.points <= 21
+      dealer_wins
+    elsif @player.points < @dealer.points && @dealer.points > 21
+      player_wins
+    end
   end
 
-  def start_game_dealer
-    @cards_d = "#{@cards_d}"
-    @deposit_d = @deposit_d - 10
+  def make_rate
+    @player.balance -= @rate
+    @dealer.balance -= @rate
+    @bank = @rate * 2
+  end
+
+  def player_wins
+    @player.balance += @bank
+  end
+
+  def dealer_wins
+    @dealer.balance += @bank
+  end
+
+  def draw
+    @player.balance += @bank
+    @dealer.balance += @bank
   end
 
 end
