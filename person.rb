@@ -3,7 +3,7 @@ class Person
   attr_accessor :balance, :hand, :card, :score
   attr_reader :deck, :player, :dealer, :name
 
-  def initialize(*params)
+  def initialize(*)
     @balance = 100
     @hand = []
     @score = 0
