@@ -1,7 +1,7 @@
-#main class for roles 
+#main class for roles
 class Person
   attr_accessor :balance, :hand, :card, :score
-  attr_reader :deck, :player, :dealer
+  attr_reader :deck, :player, :dealer, :name
 
   def initialize(*params)
     @balance = 100
@@ -10,9 +10,10 @@ class Person
   end
 
   def take_card(card)
-    @card = deck.take_card
+    @card = card.take_card
     @hand << @card
-    @hand += @card.value
+    @score += @card.value
+    ace if limit?
   end
 
   def ace

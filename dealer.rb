@@ -1,9 +1,11 @@
 #class for dealer
 class Dealer < Person
+  attr_accessor :hidden
 
   def initialize
     super
     @name = 'Dealer'
+    @hidden = true
   end
 
   def next_turn(card)
@@ -19,4 +21,5 @@ class Dealer < Person
       true
     end
   end
+
 end

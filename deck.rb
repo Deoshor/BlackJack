@@ -17,4 +17,9 @@ class Deck
   def shuffle
     @cards.shuffle!
   end
+
+  def take_card
+    @cards.slice!(-1)
+  end
+  
 end

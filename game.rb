@@ -1,6 +1,6 @@
 #class of game
 class Game
-  attr_reader :player, :dealer, :bank, :deck, :rate
+  attr_reader :player, :dealer, :bank, :deck, :rate, :balance
   RATE = 10
 
   def initialize(player, dealer, deck)
@@ -18,28 +18,36 @@ class Game
   end
 
   def start_game
+    system 'clear'
     @player.hand = []
     @dealer.hand = []
     @player.score = 0
     @dealer.score = 0
+    @dealer.hidden = true
     @deck = Deck.new
+    make_rate
     2.times { @player.take_card(@deck) }
     2.times { @dealer.take_card(@deck) }
   end
 
   def check_result
-    if @player.points > @dealer.points && @player.points <= 21
+    if @player.score > @dealer.score && @player.score <= 21
       player_wins
-    elsif @player.points > 21 && @dealer.points > 21 || @player.points == @dealer.points
+    elsif @player.score > 21 && @dealer.score > 21 || @player.score == @dealer.score
       draw
-    elsif @player.points > 21 && @dealer.points <= 21
+    elsif @player.score > 21 && @dealer.score <= 21
       dealer_wins
-    elsif @player.points < @dealer.points && @dealer.points <= 21
+    elsif @player.score < @dealer.score && @dealer.score <= 21
       dealer_wins
-    elsif @player.points < @dealer.points && @dealer.points > 21
+    elsif @player.score < @dealer.score && @dealer.score > 21
       player_wins
     end
   end
+
+  def check_balance
+   return :dealer_lose if @dealer.balance.zero?
+   return :player_lose if @player.balance.zero?
+ end
 
   def make_rate
     @player.balance -= @rate
@@ -49,15 +57,18 @@ class Game
 
   def player_wins
     @player.balance += @bank
+    @player
   end
 
   def dealer_wins
     @dealer.balance += @bank
+    @dealer
   end
 
   def draw
     @player.balance += @bank
     @dealer.balance += @bank
+    @nil
   end
 
 end
