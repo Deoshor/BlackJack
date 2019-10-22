@@ -9,8 +9,10 @@ class Deck
   end
 
   def collect
-    Card::CARDS.each do |shirt, value|
-      @cards << Card.new(shirt,value)
+    Card::FACES.each do |face|
+      Card::SHIRTS.each do |shirt, value|
+        @cards << Card.new(shirt, value, face)
+      end
     end
   end
 
@@ -21,5 +23,5 @@ class Deck
   def take_card
     @cards.slice!(-1)
   end
-  
+
 end
