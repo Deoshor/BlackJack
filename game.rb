@@ -18,7 +18,6 @@ class Game
   end
 
   def start_game
-    system 'clear'
     @player.hand = []
     @dealer.hand = []
     @player.score = 0
@@ -68,7 +67,7 @@ class Game
   def draw
     @player.balance += @bank
     @dealer.balance += @bank
-    @nil
+    nil
   end
 
 end
