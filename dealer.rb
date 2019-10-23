@@ -3,7 +3,7 @@ class Dealer < Person
   attr_accessor :hidden
 
   def initialize
-    super
+    super()
     @name = 'Dealer'
     @hidden = true
   end
@@ -13,13 +13,7 @@ class Dealer < Person
   end
 
   def another_card?
-    if @score >= 21
-      false
-    elsif @score >= 17 && @score <= 21
-      false
-    else
-      true
-    end
+    (@score >= 21) &&  (@score >= 17 && @score <= 21) ? false : true
   end
 
 end

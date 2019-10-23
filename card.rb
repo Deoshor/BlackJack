@@ -22,4 +22,8 @@ class Card
     @shirt.to_s.include?("A")
   end
 
+  def card_shirt
+    @shirt + @face
+  end
+  
 end

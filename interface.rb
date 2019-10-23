@@ -95,7 +95,7 @@ class Interface
   def draw_hand(person)
     puts "#{person.name}, в Вашей колоде: #{person.score} очков"
     person.hand.each do |card|
-      print "|#{card.shirt}|"
+      print "|#{card.card_shirt}|"
     end
     puts
   end
